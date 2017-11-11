@@ -1,3 +1,40 @@
+def interactive_menu
+  students = []
+  loop do
+    #1.print the menu and ask the user what to do
+    puts "Type 1 for Input the students"
+    puts "Type 2 for Show the students by cohort"
+    puts "Type 3 for Show the students"
+    puts "Type 9 for Exit"
+
+  #2.read the input and save it into a variable
+    selection = gets.chomp
+
+  #3.do what the user asked
+    case selection
+    when "1"
+      #input the students
+      students = input_students
+    when "2"
+      print_header
+      print_by_cohort(students)
+      print_footer(students)
+    when "3"
+      #show the students
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit #will quit the program
+    else
+      "Try again please."
+    end
+  end
+end
+
+
+
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return five time"
@@ -98,8 +135,16 @@ def print_header
   puts "-------------"
 end
 
-
 def print(students)
+  if students.length <= 1
+  puts "No students!"
+  end
+  students.each_with_index do |student, index|
+      puts "#{index + 1} - #{student[:name]} (#{student[:cohort]} cohort)"
+  end
+end
+
+def print_by_cohort(students)
   if students.length >= 1
     puts "Enter the cohort you want to display"
     selected_cohort = gets.chomp
@@ -137,7 +182,7 @@ def print_footer(students)
 
 end
 
-
+interactive_menu
 students = input_students
 
 print_header
