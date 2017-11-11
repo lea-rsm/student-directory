@@ -6,10 +6,11 @@ def input_students
   students = []
 
   #get the first name
-  name = gets.chomp.to_s
+  name = gets.strip.to_s
 
   puts "Please enter their cohort"
-  cohort = gets.chomp.to_s
+  #we can also use delete method
+  cohort = gets.delete("\n").to_s
   # puts "Enter their hobbies"
   # #while the name is not empty repeat this code
   # hobbies = gets.chomp
