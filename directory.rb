@@ -44,6 +44,8 @@ def input_students
       end
 
 
+
+
   while !name.empty? do
     #add the student hash to the array
     students << {name: name, cohort: cohort}
@@ -98,19 +100,23 @@ end
 
 
 def print(students)
-  puts "Enter the cohort you want to display"
-  selected_cohort = gets.chomp
+  if students.length >= 1
+    puts "Enter the cohort you want to display"
+    selected_cohort = gets.chomp
 
-  line_width = 50
+    line_width = 50
 
-  #we create an empty array, and with select that puts all the student cohort equal to
-  #the user's input in the empty array. and returns it.
-  selected_student = students.select do |student|
-    student[:cohort] == selected_cohort
-  end
+    #we create an empty array, and with select that puts all the student cohort equal to
+    #the user's input in the empty array. and returns it.
+    selected_student = students.select do |student|
+      student[:cohort] == selected_cohort
+    end
 
-  selected_student.each_with_index do |student, index|
-    puts "#{index + 1} - #{student[:name]} (#{student[:cohort]} cohort)"
+    selected_student.each_with_index do |student, index|
+        puts "#{index + 1} - #{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  else
+    puts "No students!"
   end
   # i = 0 #initialize and everytime you "enter" your loop, it's i + 1
   # while i < students.length #while i is inferior at my array's length do the following code:
@@ -123,9 +129,6 @@ def print(students)
 
 
 end
-
-
-
 
 
 def print_footer(students)
