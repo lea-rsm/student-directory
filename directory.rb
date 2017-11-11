@@ -28,23 +28,25 @@ def print_header
 end
 
 def print(students)
-  puts "What letter do you want the names of students to start with?"
-  answer = gets.chomp.downcase
+  # students.each_with_index do |student, index|
+  #   puts "#{index + 1} - #{student[:name]} (#{student[:cohort]} cohort)"
+  # end
 
-    students.each_with_index do |student, index|
+  i = 0 #initialize and everytime you "enter" your loop, it's i + 1
+  while i < students.length #while i is inferior at my array's length do the following code:
 
-      if student[:name].downcase.start_with?(answer) && student[:name].length < 12
-        puts "#{index + 1} - #{student[:name]} (#{student[:cohort]} cohort)"
-      end
-
-    end
-
+puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+  i += 1
+end
 
 end
 
 
+
+
+
 def print_footer(students)
-  puts "However, Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students"
 
 end
 
