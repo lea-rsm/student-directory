@@ -1,46 +1,61 @@
+  @students = []
+
 def interactive_menu
-  students = []
+
   loop do
-    #1.print the menu and ask the user what to do
-    puts "Type 1 for Input the students"
-    puts "Type 2 for Show the students by cohort"
-    puts "Type 3 for Show the students"
-    puts "Type 9 for Exit"
+    print_menu
+    process(gets.chomp)
+  end
+end
 
   #2.read the input and save it into a variable
-    selection = gets.chomp
+    #selection = gets.chomp
 
+def process(selection)
   #3.do what the user asked
     case selection
     when "1"
       #input the students
-      students = input_students
+      @students = input_students
     when "2"
-      print_header
-      print_by_cohort(students)
-      print_footer(students)
+      show_students_cohort
     when "3"
       #show the students
-      print_header
-      print(students)
-      print_footer(students)
+      show_students
     when "9"
       exit #will quit the program
     else
       "Try again please."
     end
-  end
+    end
+
+
+def print_menu
+  #1.print the menu and ask the user what to do
+  puts "Type 1 for Input the students"
+  puts "Type 2 for Show the students by cohort"
+  puts "Type 3 for Show the students"
+  puts "Type 9 for Exit"
 end
 
+def show_students_cohort
+  print_header
+  print_by_cohort
+  print_footer
+  end
+def show_students
+  print_header
+  print_student_list
+  print_footer
 
+end
 
 
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return five time"
 
-  #create empty array
-  students = []
+
 
   #get the first name
   name = gets.strip.to_s
@@ -85,7 +100,7 @@ def input_students
 
   while !name.empty? do
     #add the student hash to the array
-    students << {name: name, cohort: cohort}
+    @students << {name: name, cohort: cohort}
     if students.count == 1
     puts "Now we have only #{students.count} student."
     else
@@ -135,17 +150,17 @@ def print_header
   puts "-------------"
 end
 
-def print(students)
-  if students.length <= 1
+def print_student_list
+  if @students.length <= 1
   puts "No students!"
   end
-  students.each_with_index do |student, index|
+  @students.each_with_index do |student, index|
       puts "#{index + 1} - #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-def print_by_cohort(students)
-  if students.length >= 1
+def print_by_cohort
+  if @students.length >= 1
     puts "Enter the cohort you want to display"
     selected_cohort = gets.chomp
 
@@ -176,19 +191,14 @@ def print_by_cohort(students)
 end
 
 
-def print_footer(students)
+def print_footer
   puts ""
-  puts "However, Overall, we have #{students.count} great students"
+  puts "However, Overall, we have #{@students.count} great students"
 
 end
 
 interactive_menu
-students = input_students
 
-print_header
-print(students)
-
-print_footer(students)
 
 
 # DEMANDER comment faire pour ne pas avoir a écrire chaque #{student[:name]}, #{student[:cohort] etc}
