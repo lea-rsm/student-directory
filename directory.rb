@@ -38,14 +38,17 @@ def print_header
   puts "-------------"
 end
 
+
 def print(students)
+
+  line_width = 50
   # students.each_with_index do |student, index|
   #   puts "#{index + 1} - #{student[:name]} (#{student[:cohort]} cohort)"
   # end
   i = 0 #initialize and everytime you "enter" your loop, it's i + 1
   while i < students.length #while i is inferior at my array's length do the following code:
 
-  puts "#{i + 1}. #{students[i][:name]} - #{students[i][:cohort]} - #{students[i][:hobbies]} - #{students[i][:country_of_birth]} - #{students[i][:height]}."
+  puts "#{i + 1}. #{students[i][:name]} - #{students[i][:cohort]} - #{students[i][:hobbies]} - #{students[i][:country_of_birth]} - #{students[i][:height]}".center(line_width)
 
     i += 1
   end
