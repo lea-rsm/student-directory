@@ -56,7 +56,7 @@ end
 
 def input_students
   puts "Please enter the names of the students"
-  puts "To finish, just hit return five time"
+  puts "To finish, just hit return twice"
 
 
 
@@ -84,7 +84,7 @@ def input_students
      cohort = "november"
   end
 
-    puts "Enter 1 to change the name, 2 to change the cohort or 3 to continue"
+    puts "Enter 1 to change the name, 2 to change the cohort or press return to continue"
       answer = gets.chomp.to_i
       if  answer == 2
         puts "Type the cohort again"
@@ -104,10 +104,10 @@ def input_students
   while !name.empty? do
     #add the student hash to the array
     @students << {name: name, cohort: cohort}
-    if students.count == 1
-    puts "Now we have only #{students.count} student."
+    if @students.count == 1
+    puts "Now we have only #{@students.count} student."
     else
-    puts "Now we have #{students.count} students."
+    puts "Now we have #{@students.count} students."
     end
     #get another name from user
     name = gets.chomp.to_s
@@ -126,7 +126,7 @@ def input_students
     end
 
     if !name.empty?
-      puts "Enter 1 to change the name, 2 to change the cohort or 3 to continue"
+      puts "Enter 1 to change the name, 2 to change the cohort or press return to continue"
       answer = gets.chomp.to_i
       if  answer == 2
         puts "Type the cohort again"
@@ -144,7 +144,7 @@ def input_students
 
 
 #return the array of students
-students
+@students
 end
 
 
@@ -209,6 +209,7 @@ def save_students
     file.puts csv_line #we call it on a file so it write on the file not the screen
   end
   file.close
+  puts "Saved!"
 end
 
 interactive_menu
