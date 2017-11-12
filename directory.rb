@@ -24,6 +24,8 @@ def process(selection)
       show_students
     when "9"
       exit #will quit the program
+    when "4"
+      save_students
     else
       "Try again please."
     end
@@ -35,6 +37,7 @@ def print_menu
   puts "Type 1 for Input the students"
   puts "Type 2 for Show the students by cohort"
   puts "Type 3 for Show the students"
+  puts "Type 4 to save the list of students"
   puts "Type 9 for Exit"
 end
 
@@ -195,6 +198,17 @@ def print_footer
   puts ""
   puts "However, Overall, we have #{@students.count} great students"
 
+end
+def save_students
+  #open file for writing
+  file = File.open("students.csv", "w")
+  #iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name]], [student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line #we call it on a file so it write on the file not the screen
+  end
+  file.close
 end
 
 interactive_menu
