@@ -26,6 +26,8 @@ def process(selection)
       exit #will quit the program
     when "4"
       save_students
+    when "5"
+      load_students
     else
       "Try again please."
     end
@@ -38,6 +40,7 @@ def print_menu
   puts "Type 2 for Show the students by cohort"
   puts "Type 3 for Show the students"
   puts "Type 4 to save the list of students"
+  puts "Type 5 to load the list for students"
   puts "Type 9 for Exit"
 end
 
@@ -211,6 +214,15 @@ def save_students
   file.close
   puts "Saved!"
 end
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line| #read all the lines and iterate over it
+    name, cohort = line.chomp.split(',') #parallele assignment
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
 
 interactive_menu
 
