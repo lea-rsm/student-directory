@@ -4,7 +4,7 @@ def interactive_menu
 
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -64,11 +64,11 @@ def input_students
 
 
   #get the first name
-  name = gets.strip.to_s
+  name = STDIN.gets.strip.to_s
 
   puts "Please enter their cohort"
   #we can also use delete method
-  cohort = gets.delete("\n").to_s
+  cohort = STDIN.gets.delete("\n").to_s
   # puts "Enter their hobbies"
   # #while the name is not empty repeat this code
   # hobbies = gets.chomp
@@ -88,17 +88,17 @@ def input_students
   end
 
     puts "Enter 1 to change the name, 2 to change the cohort or press return to continue"
-      answer = gets.chomp.to_i
+      answer = STDIN.gets.chomp.to_i
       if  answer == 2
         puts "Type the cohort again"
-        cohort = gets.chomp
+        cohort = STDIN.gets.chomp
 
       elsif answer == 1
         puts "Type again the name"
-        name = gets.chomp
+        name = STDIN.gets.chomp
 
         else
-        puts "All good then!"
+        puts "All good then! An other one? otherwise press return twice."
       end
 
 
@@ -113,8 +113,8 @@ def input_students
     puts "Now we have #{@students.count} students."
     end
     #get another name from user
-    name = gets.chomp.to_s
-    cohort = gets.chomp.to_s
+    name = STDIN.gets.chomp.to_s
+    cohort = STDIN.gets.chomp.to_s
     # hobbies = gets.chomp
     # country = gets.chomp
     # height = gets.chomp
@@ -130,17 +130,17 @@ def input_students
 
     if !name.empty?
       puts "Enter 1 to change the name, 2 to change the cohort or press return to continue"
-      answer = gets.chomp.to_i
+      answer = STDIN.gets.chomp.to_i
       if  answer == 2
         puts "Type the cohort again"
-        cohort = gets.chomp
+        cohort = STDIN.gets.chomp
 
       elsif answer == 1
         puts "Type again the name"
-        name = gets.chomp
+        name = STDIN.gets.chomp
 
         else
-        puts "All good then!"
+        puts "All good then! An other one? otherwise press return twice."
       end
     end
   end
@@ -168,13 +168,13 @@ end
 def print_by_cohort
   if @students.length >= 1
     puts "Enter the cohort you want to display"
-    selected_cohort = gets.chomp
+    selected_cohort = STDIN.gets.chomp
 
     line_width = 50
 
     #we create an empty array, and with select that puts all the student cohort equal to
     #the user's input in the empty array. and returns it.
-    selected_student = students.select do |student|
+    selected_student = @students.select do |student|
       student[:cohort] == selected_cohort
     end
 
@@ -214,16 +214,26 @@ def save_students
   file.close
   puts "Saved!"
 end
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv") #default file if not any
+  file = File.open(filename, "r")
   file.readlines.each do |line| #read all the lines and iterate over it
     name, cohort = line.chomp.split(',') #parallele assignment
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
-
-
+def try_load_students
+  filename = ARGV.first #first argument from command line
+  return if filename.nil? #get out of the method if it isnt given
+  if File.exist?(filename) #if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}."
+  else #if it doesnt exists
+    puts "Sorry, #{filename} doesn't exist.."
+    exit #quit the program
+  end
+end
+try_load_students
 interactive_menu
 
 
