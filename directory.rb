@@ -106,7 +106,7 @@ def input_students
 
   while !name.empty? do
     #add the student hash to the array
-    @students << {name: name, cohort: cohort}
+    student_infos(name, cohort) #method created down below
     if @students.count == 1
     puts "Now we have only #{@students.count} student."
     else
@@ -218,7 +218,7 @@ def load_students(filename = "students.csv") #default file if not any
   file = File.open(filename, "r")
   file.readlines.each do |line| #read all the lines and iterate over it
     name, cohort = line.chomp.split(',') #parallele assignment
-    @students << {name: name, cohort: cohort.to_sym}
+    student_infos(name, cohort)
   end
   file.close
 end
@@ -233,6 +233,11 @@ def try_load_students
     exit #quit the program
   end
 end
+
+def student_infos(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+
 try_load_students
 interactive_menu
 
