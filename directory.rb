@@ -60,9 +60,6 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-
-
-
   #get the first name
   name = STDIN.gets.strip.to_s
 
@@ -80,37 +77,15 @@ def input_students
 
 
 #for it to be applicable to the first student.
-  if name.nil?
-    name = "Default"
-  end
-  if cohort.nil?
-     cohort = "november"
-  end
-
-    puts "Enter 1 to change the name, 2 to change the cohort or press return to continue"
-      answer = STDIN.gets.chomp.to_i
-      if  answer == 2
-        puts "Type the cohort again"
-        cohort = STDIN.gets.chomp
-
-      elsif answer == 1
-        puts "Type again the name"
-        name = STDIN.gets.chomp
-
-        else
-        puts "All good then! An other one? otherwise press return twice."
-      end
-
-
-
-
+  defaultnameandco
+  correction
   while !name.empty? do
     #add the student hash to the array
     student_infos(name, cohort) #method created down below
     if @students.count == 1
-    puts "Now we have only #{@students.count} student."
+      puts "Now we have only #{@students.count} student."
     else
-    puts "Now we have #{@students.count} students."
+      puts "Now we have #{@students.count} students."
     end
     #get another name from user
     name = STDIN.gets.chomp.to_s
@@ -121,27 +96,10 @@ def input_students
 
     # so it loops for each student
 
-    if name.nil?
-      name = "Default"
-    end
-    if cohort.nil?
-      cohort = "november"
-    end
+  defaultnameandco
 
     if !name.empty?
-      puts "Enter 1 to change the name, 2 to change the cohort or press return to continue"
-      answer = STDIN.gets.chomp.to_i
-      if  answer == 2
-        puts "Type the cohort again"
-        cohort = STDIN.gets.chomp
-
-      elsif answer == 1
-        puts "Type again the name"
-        name = STDIN.gets.chomp
-
-        else
-        puts "All good then! An other one? otherwise press return twice."
-      end
+      correction
     end
   end
 
@@ -226,9 +184,10 @@ def try_load_students
   filename = ARGV.first #first argument from command line
   if filename.nil?
     load_students
-    puts "Loaded #{@students.count} from default file"
-  end  #get out of the method if it isnt given
-  if File.exist?(filename) #if it exists
+    puts "Loaded #{@students.count} from default"
+   #get out of the method if it isnt given
+
+  elsif File.exist?(filename) #if it exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}."
   else #if it doesnt exists
@@ -240,6 +199,31 @@ end
 def student_infos(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
 end
+def correction
+  puts "Enter 1 to change the name, 2 to change the cohort or press return to continue"
+    answer = STDIN.gets.chomp.to_i
+    if  answer == 2
+      puts "Type the cohort again"
+      cohort = STDIN.gets.chomp
+
+    elsif answer == 1
+      puts "Type again the name"
+      name = STDIN.gets.chomp
+
+      else
+      puts "All good then! An other one? otherwise press return twice."
+    end
+  end
+  def defaultnameandco
+    if name.nil?
+      name = "Default"
+    end
+    if cohort.nil?
+      cohort = "november"
+    end
+  end
+
+
 
 try_load_students
 interactive_menu
