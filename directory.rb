@@ -181,26 +181,29 @@ def print_footer
   puts "However, Overall, we have #{@students.count} great students"
 
 end
+
 def save_students
   #open file for writing
-  file = File.open("students.csv", "w")
+  file = File.open("students.csv", "w") do |file| #opens a block to close automatically
   #iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name]], [student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line #we call it on a file so it write on the file not the screen
-  end
-  file.close
+      @students.each do |student|
+          student_data = [student[:name]], [student[:cohort]]
+          csv_line = student_data.join(",")
+          file.puts csv_line #we call it on a file so it write on the file not the screen
+      end
+    end
   puts "Saved!"
 end
+
 def load_students(filename = "students.csv") #default file if not any
-  file = File.open(filename, "r")
+  file = File.open(filename, "r") do |file|
   file.readlines.each do |line| #read all the lines and iterate over it
     name, cohort = line.chomp.split(',') #parallele assignment
     student_infos(name, cohort)
 
   end
-  file.close
+end
+
 end
 
 
@@ -210,8 +213,7 @@ def try_load_students
   puts "If no filename, the default file is student.csv"
   filename = STDIN.gets.chomp
   #filename = ARGV.first #first argument from command line
-  if filename.nil?
-    puts "What is the name you want to give to the file?"
+  if filename == "" #if the user press return
     load_students
     puts "Loaded #{@students.count} from default"
    #get out of the method if it isnt given
