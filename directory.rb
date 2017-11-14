@@ -46,8 +46,8 @@ def print_menu
   puts "Type 1 for Input the students"
   puts "Type 2 for Show the students by cohort"
   puts "Type 3 for Show the students"
-  puts "Type 4 to save the list of students"
-  puts "Type 5 to load the list for students"
+  puts "Type 4 for Save the list of students"
+  puts "Type 5 for Load the list for students"
   puts "Type 9 for Exit"
 end
 
@@ -202,9 +202,16 @@ def load_students(filename = "students.csv") #default file if not any
   end
   file.close
 end
+
+
+
 def try_load_students
-  filename = ARGV.first #first argument from command line
+  puts "What is the name of the file you want to load from?"
+  puts "If no filename, the default file is student.csv"
+  filename = STDIN.gets.chomp
+  #filename = ARGV.first #first argument from command line
   if filename.nil?
+    puts "What is the name you want to give to the file?"
     load_students
     puts "Loaded #{@students.count} from default"
    #get out of the method if it isnt given
