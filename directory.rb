@@ -1,4 +1,5 @@
   @students = []
+  require "csv"
 
 def interactive_menu
 
@@ -179,30 +180,24 @@ end
 def print_footer
   puts ""
   puts "However, Overall, we have #{@students.count} great students"
-
 end
 
 def save_students
   #open file for writing
-  file = File.open("students.csv", "w") do |file| #opens a block to close automatically
+  CSV.open(filename, "w") do |row| #opens a block to close automatically
   #iterate over the array of students
       @students.each do |student|
-          student_data = [student[:name]], [student[:cohort]]
-          csv_line = student_data.join(",")
-          file.puts csv_line #we call it on a file so it write on the file not the screen
+          row << [student[:name], student[:cohort]]
       end
-    end
+  end
   puts "Saved!"
 end
 
 def load_students(filename = "students.csv") #default file if not any
-  file = File.open(filename, "r") do |file|
-  file.readlines.each do |line| #read all the lines and iterate over it
-    name, cohort = line.chomp.split(',') #parallele assignment
+  CSV.foreach(filename) do |line| #read all the lines and iterate over it
+    name, cohort = line #parallele assignment
     student_infos(name, cohort)
-
   end
-end
 
 end
 
