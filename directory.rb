@@ -16,18 +16,25 @@ def process(selection)
     case selection
     when "1"
       #input the students
+      puts "Inputting students."
       @students = input_students
     when "2"
+      puts "Showing students filtered by cohort."
       show_students_cohort
     when "3"
+      puts "Showing students."
       #show the students
       show_students
+      puts
     when "9"
+      puts "Exiting"
       exit #will quit the program
     when "4"
       save_students
+
     when "5"
       load_students
+      puts "Loaded!"
     else
       "Try again please."
     end
@@ -61,11 +68,11 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   #get the first name
-  name = STDIN.gets.strip.to_s
+  @name = STDIN.gets.strip.to_s
 
   puts "Please enter their cohort"
   #we can also use delete method
-  cohort = STDIN.gets.delete("\n").to_s
+  @cohort = STDIN.gets.delete("\n").to_s
   # puts "Enter their hobbies"
   # #while the name is not empty repeat this code
   # hobbies = gets.chomp
@@ -77,9 +84,17 @@ def input_students
 
 
 #for it to be applicable to the first student.
-  defaultnameandco
+defaultname
+#if name.nil?
+  #name = "Default"
+#end
+defaultcohort
+
+#if cohort.nil?
+  #cohort = "november"
+#end
   correction
-  while !name.empty? do
+  while !@name.empty? do
     #add the student hash to the array
     student_infos(name, cohort) #method created down below
     if @students.count == 1
@@ -88,17 +103,23 @@ def input_students
       puts "Now we have #{@students.count} students."
     end
     #get another name from user
-    name = STDIN.gets.chomp.to_s
-    cohort = STDIN.gets.chomp.to_s
+    @name = STDIN.gets.chomp.to_s
+    @cohort = STDIN.gets.chomp.to_s
     # hobbies = gets.chomp
     # country = gets.chomp
     # height = gets.chomp
 
     # so it loops for each student
+    defaultname
+    #if name.nil?
+      #name = "Default"
+    #end
+    defaultcohort
+    #if cohort.nil?
+      #cohort = "november"
+    #end
 
-  defaultnameandco
-
-    if !name.empty?
+    if !@name.empty?
       correction
     end
   end
@@ -177,6 +198,7 @@ def load_students(filename = "students.csv") #default file if not any
   file.readlines.each do |line| #read all the lines and iterate over it
     name, cohort = line.chomp.split(',') #parallele assignment
     student_infos(name, cohort)
+
   end
   file.close
 end
@@ -204,22 +226,24 @@ def correction
     answer = STDIN.gets.chomp.to_i
     if  answer == 2
       puts "Type the cohort again"
-      cohort = STDIN.gets.chomp
+      @cohort = STDIN.gets.chomp
 
     elsif answer == 1
       puts "Type again the name"
-      name = STDIN.gets.chomp
+      @name = STDIN.gets.chomp
 
       else
       puts "All good then! An other one? otherwise press return twice."
     end
   end
-  def defaultnameandco
-    if name.nil?
-      name = "Default"
+  def defaultname
+    if @name.nil?
+      @name = "Default"
     end
-    if cohort.nil?
-      cohort = "november"
+  end
+  def defaultcohort
+    if @cohort.nil?
+      @cohort = "november"
     end
   end
 
